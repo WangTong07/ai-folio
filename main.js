@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             w = window.innerWidth;
             h = window.innerHeight;
             canvas.width = w;
-            canvas.height = h;
+            // canvas.height = h; // <-- 只把它注释掉
         });
         // 星星参数
         const STAR_NUM = 220;
