@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI作品展示 | CyberVerse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-purple': '#7E22CE',
+                        'cyber-blue': '#2563EB',
+                        'cyber-green': '#10B981',
+                        'cyber-pink': '#EC4899',
+                        'cyber-dark': '#121212',
+                        'cyber-gray': '#1E1E1E',
+                    },
+                    fontFamily: {
+                        cyber: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #7E22CE, 0 0 20px #7E22CE' },
+                            '100%': { textShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #2563EB, 0 0 40px #2563EB' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+</head>
+<body class="bg-cyber-dark text-white font-cyber overflow-x-hidden grid-mask">
+    <audio id="bg-music" src="audio/霓虹夜语.mp3" autoplay loop muted></audio>
+    <canvas id="star-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></canvas>
+    <div id="animated-bg" class="fixed inset-0 -z-10 pointer-events-none"></div>
+    <div id="tsparticles" style="position:fixed;z-index:-20;inset:0;"></div>
+    <!-- 霓虹导航栏 -->
+    <header class="sticky top-0 z-50 bg-cyber-dark/80 backdrop-blur-md border-b border-cyber-purple/30 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-white animate-glow">
+                <span class="text-cyber-purple">AI</span><span class="text-cyber-blue">Folio</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <div id="music-control" class="flex items-center bg-cyber-gray/80 border border-cyber-purple/40 rounded-full shadow-lg px-4 py-2 cursor-pointer hover:shadow-cyber-purple/30 transition-all duration-300 select-none mr-4" style="backdrop-filter: blur(6px);">
+                  <i id="music-icon" class="fa fa-pause text-cyber-purple text-xl mr-2 transition-all duration-300"></i>
+                  <span class="text-white text-sm font-semibold">背景音乐</span>
+                </div>
+                <a href="#projects" class="text-white hover:text-cyber-pink transition-colors duration-300 after:content-[''] after:block after:h-0.5 after:w-0 after:bg-cyber-pink after:transition-all after:duration-300 hover:after:w-full">项目</a>
+                <a href="#learning" class="text-white hover:text-cyber-pink transition-colors duration-300 after:content-[''] after:block after:h-0.5 after:w-0 after:bg-cyber-pink after:transition-all after:duration-300 hover:after:w-full">心得</a>
+                <a href="#about" class="text-white hover:text-cyber-pink transition-colors duration-300 after:content-[''] after:block after:h-0.5 after:w-0 after:bg-cyber-pink after:transition-all after:duration-300 hover:after:w-full">关于</a>
+            </nav>
+            <button class="md:hidden text-white text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    <!-- 英雄区域 -->
+    <section class="relative h-[90vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-cyber-dark/80 via-cyber-gray/60 to-cyber-dark/80 z-0"></div>
+        <div class="absolute inset-0 opacity-30 z-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(126,34,206,0.3),transparent_40%),radial-gradient(circle_at_70%_60%,rgba(37,99,235,0.3),transparent_40%)]"></div>
+        </div>
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-bold mb-6 leading-tight text-shadow-cyber">
+                <span class="text-cyber-purple">AI</span> 项目 <span class="text-cyber-blue breathe-blue-glow-text cyber-purple-outline-text">作品集</span>
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-300 max-w-2xl mx-auto mb-10">
+                探索我使用人工智能技术创造的创新作品，每一个项目都代表着对未来的探索与想象。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#projects" class="px-8 py-3 bg-cyber-purple hover:bg-cyber-purple/80 text-white font-semibold rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyber-purple/30 border border-cyber-pink/30">
+                    探索项目 <i class="fa fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#learning" class="px-8 py-3 bg-transparent hover:bg-cyber-blue/20 text-white font-semibold rounded-md transition-all duration-300 transform hover:scale-105 border border-cyber-blue/50">
+                    学习心得 <i class="fa fa-book ml-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-cyber-dark to-transparent z-10"></div>
+    </section>
+
+    <!-- 项目展示区域 -->
+    <section id="projects" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-shadow-cyber">
+                    <span class="text-cyber-blue">AI</span> 项目展示
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">每一个项目都是技术与创意的融合，每一次失败都是成功经验的积累</p>
+                
+                <!-- 项目分类筛选 -->
+                <!-- 已移除分类标签按钮 -->
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                <!-- 项目卡片 1 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-purple/20 border border-cyber-purple/20" data-category="生成艺术" data-index="0">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示1.png" alt="解梦小助手" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-pink transition-colors duration-300">解梦小助手（测试号）</h3>
+                        <p class="text-cyber-purple font-semibold mb-2">技术栈：Cursor + Dify + 微信开发者工具</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-purple/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#7E22CE] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 2 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-blue/20 border border-cyber-blue/20" data-category="自然语言处理" data-index="1">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示2.png" alt="梦境解析精灵" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-blue transition-colors duration-300">梦境解析精灵（已上线）</h3>
+                        <p class="text-cyber-blue font-semibold mb-2">技术栈：Coze + 小微智能体</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-blue/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#2563EB] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 3 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-green/20 border border-cyber-green/20" data-category="计算机视觉" data-index="2">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示3.png" alt="报报小助手" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-green transition-colors duration-300">报报小助手（双版本）</h3>
+                        <p class="text-cyber-green font-semibold mb-2">技术栈：Cursor + Coze + 微信开发者工具、小微智能体</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-green/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#10B981] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 4 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-pink/20 border border-cyber-pink/20" data-category="音乐生成" data-index="3">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示4.png" alt="AI智能报告神器" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-pink transition-colors duration-300">AI智能报告神器（国内版 + 国际版）</h3>
+                        <p class="text-cyber-pink font-semibold mb-2">技术栈：Vue 3 + Gitee / GitHub + 腾讯云托管 / Vercel</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-pink/80 group-hover:text-cyber-purple/90 text-lg drop-shadow-[0_0_6px_#EC4899] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 5 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-purple/20 border border-cyber-purple/20" data-category="强化学习" data-index="4">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示5.png" alt="AI爆款文案神器" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-purple transition-colors duration-300">AI爆款文案神器</h3>
+                        <p class="text-cyber-purple font-semibold mb-2">技术栈：Vue 3 + GitHub + Vercel</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-purple/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#7E22CE] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 6 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-blue/20 border border-cyber-blue/20" data-category="数据分析" data-index="5">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示6.png" alt="本地AI知识助理" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-blue transition-colors duration-300">本地AI知识助理</h3>
+                        <p class="text-cyber-blue font-semibold mb-2">技术栈：Transformers.js + Whisper + PDF.js + Tesseract.js + Vercel</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-blue/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#2563EB] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 7 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-purple/20 border border-cyber-purple/20" data-category="生成艺术" data-index="6">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示7.png" alt="涂鸦跳跃·赛博版" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-pink transition-colors duration-300">涂鸦跳跃·赛博版</h3>
+                        <p class="text-cyber-pink font-semibold mb-2">技术栈：Cursor</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-pink/80 group-hover:text-cyber-purple/90 text-lg drop-shadow-[0_0_6px_#EC4899] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 8 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-blue/20 border border-cyber-blue/20" data-category="自然语言处理" data-index="7">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示8.png" alt="火柴人视频生成器" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-blue transition-colors duration-300">火柴人视频生成器</h3>
+                        <p class="text-cyber-blue font-semibold mb-2">技术栈：Coze 工作流 + 剪映小助手</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-blue/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#2563EB] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 项目卡片 9 -->
+                <div class="project-card group bg-cyber-gray rounded-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyber-green/20 border border-cyber-green/20" data-category="计算机视觉" data-index="8">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="images/项目展示9.png" alt="萌宝小帮手" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 relative">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-green transition-colors duration-300">萌宝小帮手</h3>
+                        <p class="text-cyber-green font-semibold mb-2">技术栈：豆包智能体平台</p>
+                        <span class="absolute bottom-3 right-3 z-10">
+                          <i class="fa fa-eye text-cyber-green/80 group-hover:text-cyber-pink/90 text-lg drop-shadow-[0_0_6px_#10B981] transition-all duration-300 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习心得总结区域 -->
+    <section id="learning" class="py-20 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_80%,rgba(126,34,206,0.1),transparent_60%),radial-gradient(circle_at_70%_20%,rgba(37,99,235,0.1),transparent_60%)]"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-shadow-cyber">
+                    AI <span class="text-cyber-green">学习心得</span> 总结
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    记录我在AI学习旅程中的思考、收获与成长，分享技术探索过程中的经验与感悟。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 心得卡片 1 -->
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-purple/30 hover:border-cyber-purple/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyber-purple/10">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyber-purple/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-lightbulb-o text-cyber-purple text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">深度学习基础</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            踏上AI学习之路以来，在老师们的悉心带领下，我开始从零开始构建自己的AI知识体系。最初我不知道从哪里入手学习，看了代码一脸懵，慢慢到通过AI工具+项目驱动+老师们传授的“产品思维”，逐步建立自己的认知体系。在实践中，我不仅掌握了Prompt设计、智能体搭建等关键技能，也逐渐理解了“一个好产品不仅要能用，更要好用”。对我来说，学习AI不仅是理解技术，更是学会如何用AI解决问题、创造价值。
+                        </p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-cyber-purple/20 text-cyber-purple text-xs font-semibold rounded-full">
+                                从用到懂
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 心得卡片 2 -->
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-blue/30 hover:border-cyber-blue/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyber-blue/10">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyber-blue/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-code text-cyber-blue text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">实践项目挑战</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            三个月内，经过不断的学习与打磨，我共落地了10个项目，从周报生成器、爆款文案神器、AI面试模拟器，到视频总结、绘画生成等，虽然有很多重复的项目，但是我很享受制作的过程，逐步实现从“用工具”到“造系统”的跃迁。我始终坚持“项目驱动学习”，边做边学。每做一个项目，我都尝试从“用户视角”出发，反复打磨交互体验、功能逻辑和AI输出质量——这正是老师们强调的**“产品思维+AI能力”的结合点**。
+
+                        </p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-cyber-blue/20 text-cyber-blue text-xs font-semibold rounded-full">
+                                以做促学
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 心得卡片 3 -->
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-green/30 hover:border-cyber-green/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyber-green/10">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyber-green/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-users text-cyber-green text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">社区与资源</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            对我而言，爱学AI社区是学习的起点，也是坚持的动力源。这里不仅有经验丰富的老师，还有一群彼此鼓励、分享实战的学习搭子。除了社区，我还借助ChatGPT、Aistudio、DeepSeek和豆包等工具，实现理论查缺、项目落地、模型试验的全流程闭环。GPT是我的深度辅导员，社区是我的学习加油站，二者互补，成就了我今天的成长速度。
+                        </p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-cyber-green/20 text-cyber-green text-xs font-semibold rounded-full">
+                                抱团共学
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 心得卡片 4 -->
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-pink/30 hover:border-cyber-pink/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyber-pink/10">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyber-pink/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-book text-cyber-pink text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">理论与实践结合</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            我始终坚持“项目驱动学习”，即边做边学、以用促学。从最初做爆款文案工具时不懂提示词如何写，到后来自定义角色扮演、控制输出风格、构建多轮对话逻辑，我亲身经历了“纸上得来终觉浅”的过程。也正是在实战中，诸如Coze的工作流机制、Dify的结构化输出、API调用方式等知识得以内化。理论赋能实践，实践反哺理解，我用双手将知识铸成经验。
+                        </p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-cyber-pink/20 text-cyber-pink text-xs font-semibold rounded-full">
+                                知行合一
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 心得卡片 5 -->
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-purple/30 hover:border-cyber-purple/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyber-purple/10">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyber-purple/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-rocket text-cyber-purple text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">持续学习的重要性</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            从AI小白到如今的多项目操盘手，我每天平均投入学习时间约6小时，几乎没有间断。中途也有迷茫与自我质疑，但看到每一个小程序跑通、每一个用户点赞的瞬间，我的坚持都变得有意义。AI学习不是百米冲刺，而是一场马拉松。长期主义让我明白，“慢”但不“停”，才是普通人逆风翻盘的起点。未来，我会继续保持节奏，走得更远。
+                        </p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-cyber-purple/20 text-cyber-purple text-xs font-semibold rounded-full">
+                                坚持进化
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 心得卡片 6 -->
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-blue/30 hover:border-cyber-blue/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyber-blue/10">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyber-blue/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-lightbulb-o text-cyber-blue text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">未来展望</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            接下来，我会继续深耕“AI能力 + 产品思维”的结合，不断迭代已有项目，也会尝试打造更多能解决真实问题、具备实用价值的AI产品。我清楚自己目前还在起步阶段，但我相信只要坚持学习、保持实践，就一定能走出自己的路径。我的目标很明确：把学到的AI能力真正用起来，尽早实现产品变现与落地，让学习产生回报，让努力看到结果。
+                        </p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-cyber-blue/20 text-cyber-blue text-xs font-semibold rounded-full">
+                                学以致用
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 学习历程时间线 -->
+            <div class="mt-20 max-w-4xl mx-auto">
+                <div class="flex justify-center">
+                    <h3 class="text-4xl font-bold text-center mb-12 text-cyber-blue drop-shadow-[0_0_16px_#2563EB] inline-block border-2 border-cyber-blue rounded-xl px-8 py-2 bg-cyber-dark/60">学习历程时间线</h3>
+                </div>
+                <div class="relative">
+                    <!-- 时间线 -->
+                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyber-purple via-cyber-blue to-cyber-green transform md:-translate-x-1/2 overflow-hidden">
+                      <!-- 流光动画 -->
+                      <div class="absolute left-1/2 top-0 w-3 h-full pointer-events-none -translate-x-1/2">
+                        <div class="animate-flow-glow w-full h-32 bg-gradient-to-b from-white/0 via-cyan-200 via-80% to-white/0 blur-[8px] opacity-95"></div>
+                      </div>
+                    </div>
+                    
+                    <!-- 时间点1 -->
+                    <div class="mb-12 relative">
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-cyber-purple border-4 border-cyber-dark transform md:-translate-x-1/2"></div>
+                        <div class="md:w-1/2 md:ml-auto md:pl-8">
+                            <div class="timeline-card bg-cyber-gray/50 backdrop-blur-sm rounded-lg p-6 border border-cyber-purple/30 shadow-lg breathe-purple-glow" style="box-shadow:0 0 16px 2px #7E22CE,0 2px 16px 0 #0006;" data-index="0">
+                                <h4 class="text-xl font-bold text-cyber-purple mb-2">入门破冰</h4>
+                                <p class="text-gray-300">从面包师到AI小白，初识ChatGPT与智能体</p>
+                                <span class="text-sm text-gray-400">2025年4月</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点2 -->
+                    <div class="mb-12 relative">
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-cyber-blue border-4 border-cyber-dark transform md:-translate-x-1/2"></div>
+                        <div class="md:w-1/2 md:pr-8">
+                            <div class="timeline-card bg-cyber-gray/50 backdrop-blur-sm rounded-lg p-6 border border-cyber-blue/30 shadow-lg breathe-blue-glow" style="box-shadow:0 0 16px 2px #2563EB,0 2px 16px 0 #0006;" data-index="1">
+                                <h4 class="text-xl font-bold text-cyber-blue mb-2">项目驱动</h4>
+                                <p class="text-gray-300">用Coze/Dify打造解梦、日报等实用AI小工具</p>
+                                <span class="text-sm text-gray-400">2025年5月</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点3 -->
+                    <div class="mb-12 relative">
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-cyber-green border-4 border-cyber-dark transform md:-translate-x-1/2"></div>
+                        <div class="md:w-1/2 md:ml-auto md:pl-8">
+                            <div class="timeline-card bg-cyber-gray/50 backdrop-blur-sm rounded-lg p-6 border border-cyber-green/30 shadow-lg breathe-green-glow" style="box-shadow:0 0 16px 2px #10B981,0 2px 16px 0 #0006;" data-index="2">
+                                <h4 class="text-xl font-bold text-cyber-green mb-2">产品思维</h4>
+                                <p class="text-gray-300">学习用户视角，打磨功能与体验并重的产品</p>
+                                <span class="text-sm text-gray-400">2025年6月</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点4 -->
+                    <div class="relative">
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-cyber-pink border-4 border-cyber-dark transform md:-translate-x-1/2"></div>
+                        <div class="md:w-1/2 md:pr-8">
+                            <div class="timeline-card bg-cyber-gray/50 backdrop-blur-sm rounded-lg p-6 border border-cyber-pink/30 shadow-lg breathe-pink-glow" style="box-shadow:0 0 16px 2px #EC4899,0 2px 16px 0 #0006;" data-index="3">
+                                <h4 class="text-xl font-bold text-cyber-pink mb-2">持续精进</h4>
+                                <p class="text-gray-300">目标变现，实践AI+产品的组合拳，持续成长</p>
+                                <span class="text-sm text-gray-400">2025年7月</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区域 -->
+    <section id="about" class="py-20 bg-cyber-gray relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(126,34,206,0.1),transparent_60%),radial-gradient(circle_at_70%_60%,rgba(37,99,235,0.1),transparent_60%)]"></div>
+        <div class="container mx-auto px-2 relative z-10">
+            <div class="max-w-5xl mx-auto text-center mb-12">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4 text-shadow-cyber">
+                    关于我
+                </h2>
+                <div class="bg-cyber-gray/50 backdrop-blur-sm rounded-lg overflow-hidden border border-cyber-purple/30 shadow-lg p-8 text-left mx-auto breathe-purple-glow">
+                  <h3 class="text-2xl font-bold text-cyber-purple mb-4 flex items-center"><span class="mr-2">🌱</span>我的AI学习之路｜个人介绍</h3>
+                  <p class="text-gray-300 leading-relaxed mb-4">
+                    大家好，我是疯狂的大呲花，一个30岁才开始接触的AI小白。过去十年，我是一名每天凌晨四点起床、手揉面团的面包师，从未接触过AI，更没想过有一天能做出让别人使用的小程序。
+                  </p>
+                  <p class="text-gray-300 leading-relaxed mb-4">
+                    2025年4月，我正式踏上AI学习之路，加入了爱学AI社区，结识了一群亦师亦友的小伙伴，在老师们的引领下，从完全不懂代码、不知道ChatGPT是什么的小白出发踏入AI的浩瀚星辰。三个月内，我通过实战+社群陪跑，独立完成了多个AI项目，包括：
+                  </p>
+                  <ul class="list-disc pl-6 text-gray-300 mb-4">
+                    <li>日报/周报生成器：一键把流水账转成结构化报告</li>
+                    <li>爆款文案神器：输入关键词生成朋友圈/小红书文案</li>
+                    <li>AI面试模拟器：模拟真实场景，给出反馈建议</li>
+                    <li>本地知识助理：帮用户总结文件、提取重点，完全保护隐私</li>
+                    <li>图文生成与视频创作：用AI绘图、配文、变装、剪辑</li>
+                    <li>AI情报中心：自动获取最新资讯、构建知识库</li>
+                    <li>灵性解梦小程序：已上线微信，真实用户使用中</li>
+                  </ul>
+                  <p class="text-gray-300 leading-relaxed mb-4">
+                    我从“只会用工具”进阶为“能用产品思维做AI项目”的实践者，逐步掌握了如 <span class="text-cyber-blue">Vue</span>、<span class="text-cyber-blue">Coze</span>、<span class="text-cyber-blue">Dify</span>、<span class="text-cyber-blue">Vercel</span> 等工具，并搭建起属于自己的AI应用生态。
+                  </p>
+                  <p class="text-gray-300 leading-relaxed mb-4">
+                    在学习过程中，我最感谢的是爱学AI社区——这里的老师不仅教会了我使用AI工具，还教会了我产品思维的建立，学习搭子们的经验分享给了我勇气。我学到的不只是技术，更是一种“普通人也能用AI改变人生”的信念。
+                  </p>
+                  <div class="bg-cyber-blue/10 rounded-lg p-4 mb-4">
+                    <span class="text-cyber-blue font-semibold">🔧 我的软实力也在不断扩展，比如：</span>
+                    <ul class="list-disc pl-6 mt-2 text-gray-300">
+                      <li>会用AI做PPT、做图、写文案、剪视频、写脚本</li>
+                      <li>能用AI帮朋友解梦、准备面试、做社交内容</li>
+                      <li>懂一点设计、会一点表达、脑子里总有点新点子</li>
+                    </ul>
+                  </div>
+                  <p class="text-gray-300 leading-relaxed">
+                    我不是什么大牛，但我在坚持。我不懂很多底层算法，但我能用AI创造价值。我相信只要不断学习、持续实践，总有一天，AI会成为我改变人生的真正杠杆。
+                  </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目详情模态弹窗 -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg hidden">
+      <div class="bg-cyber-gray rounded-2xl border-2 border-cyber-purple/40 shadow-2xl max-w-2xl w-full relative overflow-hidden animate-fade-in">
+        <button id="modal-close" class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-cyber-pink transition-all duration-200">&times;</button>
+        <img id="modal-img" src="" alt="项目大图" class="w-full h-96 object-contain bg-black rounded-t-2xl">
+        <div class="p-10">
+          <h3 id="modal-title" class="text-3xl font-extrabold mb-6 text-cyber-purple">项目标题</h3>
+          <div id="modal-stack" class="mb-4 font-semibold text-lg"></div>
+          <div id="modal-desc" class="text-gray-300 leading-relaxed text-lg">这里是项目的详细介绍内容。</div>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+    <script>
+  // 音乐悬浮窗控制
+  const audio = document.getElementById('bg-music');
+  const musicControl = document.getElementById('music-control');
+  const musicIcon = document.getElementById('music-icon');
+  let isPlaying = true;
+  let firstUserInteract = true;
+  musicControl.addEventListener('click', function() {
+    if (firstUserInteract) {
+      audio.muted = false;
+      firstUserInteract = false;
+    }
+    if (audio.paused) {
+      audio.play();
+      musicIcon.classList.remove('fa-play');
+      musicIcon.classList.add('fa-pause');
+      isPlaying = true;
+    } else {
+      audio.pause();
+      musicIcon.classList.remove('fa-pause');
+      musicIcon.classList.add('fa-play');
+      isPlaying = false;
+    }
+  });
+  // 自动切换icon（防止外部控制）
+  audio.addEventListener('play', function() {
+    musicIcon.classList.remove('fa-play');
+    musicIcon.classList.add('fa-pause');
+    isPlaying = true;
+  });
+  audio.addEventListener('pause', function() {
+    musicIcon.classList.remove('fa-pause');
+    musicIcon.classList.add('fa-play');
+    isPlaying = false;
+  });
+</script>
+<style>
+@keyframes flow-glow {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+.animate-flow-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: flow-glow 1.5s linear infinite;
+}
+@keyframes breathe-purple-glow {
+  0% { box-shadow: 0 0 8px 1px #7E22CE, 0 2px 16px 0 #0006; }
+  50% { box-shadow: 0 0 20px 4px #a855f7, 0 2px 16px 0 #0006; }
+  100% { box-shadow: 0 0 8px 1px #7E22CE, 0 2px 16px 0 #0006; }
+}
+.breathe-purple-glow {
+  animation: breathe-purple-glow 2.8s ease-in-out infinite;
+}
+@keyframes breathe-blue-glow {
+  0% { box-shadow: 0 0 8px 1px #2563EB, 0 2px 16px 0 #0006; }
+  50% { box-shadow: 0 0 20px 4px #60a5fa, 0 2px 16px 0 #0006; }
+  100% { box-shadow: 0 0 8px 1px #2563EB, 0 2px 16px 0 #0006; }
+}
+.breathe-blue-glow {
+  animation: breathe-blue-glow 2.8s ease-in-out infinite;
+}
+@keyframes breathe-green-glow {
+  0% { box-shadow: 0 0 8px 1px #10B981, 0 2px 16px 0 #0006; }
+  50% { box-shadow: 0 0 20px 4px #6ee7b7, 0 2px 16px 0 #0006; }
+  100% { box-shadow: 0 0 8px 1px #10B981, 0 2px 16px 0 #0006; }
+}
+.breathe-green-glow {
+  animation: breathe-green-glow 2.8s ease-in-out infinite;
+}
+@keyframes breathe-pink-glow {
+  0% { box-shadow: 0 0 8px 1px #EC4899, 0 2px 16px 0 #0006; }
+  50% { box-shadow: 0 0 20px 4px #f472b6, 0 2px 16px 0 #0006; }
+  100% { box-shadow: 0 0 8px 1px #EC4899, 0 2px 16px 0 #0006; }
+}
+.breathe-pink-glow {
+  animation: breathe-pink-glow 2.8s ease-in-out infinite;
+}
+</style>
+</body>
+</html>

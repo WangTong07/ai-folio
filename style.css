@@ -1,0 +1,86 @@
+@layer utilities {
+    .content-auto {
+        content-visibility: auto;
+    }
+    .text-shadow-cyber {
+        text-shadow: 0 0 5px rgba(126, 34, 206, 0.7), 0 0 10px rgba(37, 99, 235, 0.5);
+    }
+    .border-glow {
+        box-shadow: 0 0 5px rgba(126, 34, 206, 0.7), 0 0 10px rgba(37, 99, 235, 0.5);
+    }
+    .grid-mask {
+        background-image: linear-gradient(rgba(18, 18, 18, 0.9) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(18, 18, 18, 0.9) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fade-in 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+#animated-bg {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(120deg, #7E22CE, #2563EB, #10B981, #EC4899, #7E22CE);
+  background-size: 200% 200%;
+  animation: gradient-flow 10s ease-in-out infinite;
+  opacity: 0.35;
+  filter: blur(32px) saturate(1.2);
+  z-index: -10 !important;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+}
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes breathe-blue-glow-text {
+  0% {
+    text-shadow: 0 0 2px #2563EB, 0 0 6px #2563EB33;
+  }
+  50% {
+    text-shadow: 0 0 8px #2563EB, 0 0 12px #2563EB44;
+  }
+  100% {
+    text-shadow: 0 0 2px #2563EB, 0 0 6px #2563EB33;
+  }
+}
+.breathe-blue-glow-text {
+  animation: breathe-blue-glow-filter 2.2s ease-in-out infinite;
+}
+
+.cyber-purple-outline-text {
+  text-shadow:
+    0 0 2px #7E22CE,
+    0 0 1px #7E22CE;
+}
+.breathe-blue-glow-text {
+  animation: breathe-blue-glow-filter 2.2s ease-in-out infinite;
+}
+@keyframes breathe-blue-glow-filter {
+  0% {
+    filter: drop-shadow(0 0 4px #2563EB88) drop-shadow(0 0 8px #2563EB44);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px #2563EBcc) drop-shadow(0 0 18px #2563EB66);
+  }
+  100% {
+    filter: drop-shadow(0 0 4px #2563EB88) drop-shadow(0 0 8px #2563EB44);
+  }
+}
+
+body {
+  background: rgba(18,18,18,0.92);
+}
+
+section, main, header, footer {
+  background: transparent !important;
+} 
