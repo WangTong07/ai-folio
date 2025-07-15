@@ -140,15 +140,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 项目详情弹窗数据（可后续自定义详细介绍）
     const projectDetails = [
-      { title: '解梦小助手（测试号）', img: 'images/项目展示1.png', stack: 'Cursor + Dify + 微信开发者工具', desc: '通过用户对梦境的自由描述，AI以“专业解梦师+灵性心理师”的语气生成深度梦境解析，包含情绪分析、象征意义、潜意识暗示与建议。作为第一个尝试落地的AI小程序，虽仍为测试号，但是我从0到1的代表作品。', themeColor: 'cyber-purple' },
-      { title: '梦境解析精灵（已上线）', img: 'images/项目展示2.png', stack: 'Coze + 小微智能体', desc: '为解决微信小程序测试号无法上线的问题，我以Coze平台重构了解梦功能，通过小微智能体上线至正式微信端。支持真实用户使用，亲友试玩反馈良好，弥补了第一个项目的遗憾，成为可用版本的“解梦助手”。', themeColor: 'cyber-blue' },
-      { title: '报报小助手（双版本）', img: 'images/项目展示3.png', stack: 'Cursor + Coze + 微信开发者工具、小微智能体', desc: '一款根据关键词自动生成日报/周报的小程序，拥有“测试号版本”和“已上线智能体版本”。支持自动结构化输出、时间自动填写，是我在AI内容生成与产品体验上的又一次实践。', themeColor: 'cyber-green' },
-      { title: 'AI智能报告神器（国内版 + 国际版）', img: 'images/项目展示4.png', stack: 'Vue 3 + Gitee / GitHub + 腾讯云托管 / Vercel', desc: '输入零碎工作记录，AI自动生成标准化日报/周报，支持多模式切换、缓存姓名、一键复制等贴心功能。从一个内容生成器进化为“懂你”的报告助理，国内外均有部署版本，体现了我的系统设计能力和迭代思维。', themeColor: 'cyber-pink' },
-      { title: 'AI爆款文案神器', img: 'images/项目展示5.png', stack: 'Vue 3 + GitHub + Vercel', desc: '输入关键词+选择风格，AI秒出爆款文案（朋友圈、小红书、搞笑病娇等）。采用深度Prompt调教，确保每种风格精准可控。UI/UX设计历经多轮打磨，现已形成兼具趣味性与实用性的“灵感乐园”。', themeColor: 'cyber-purple' },
-      { title: '本地AI知识助理', img: 'images/项目展示6.png', stack: 'Transformers.js + Whisper + PDF.js + Tesseract.js + Vercel', desc: '可在浏览器中本地解析音频、PDF、图片等私有文件，保障隐私前提下完成摘要、提取与问答。无需上传服务器，适合对隐私敏感的用户或企业内使用，是我对AI“在端运行”理解的实用尝试。', themeColor: 'cyber-blue' },
-      { title: '涂鸦跳跃·赛博版', img: 'images/项目展示7.png', stack: 'Cursor', desc: '用Cursor制作的一款网页小游戏，作为AI开发间隙的“创意放松项目”，让我尝试了游戏逻辑、Canvas绘图与简单碰撞判断，是对前端能力的补充练习。', themeColor: 'cyber-purple' },
-      { title: '火柴人视频生成器', img: 'images/项目展示8.png', stack: 'Coze 工作流 + 剪映小助手', desc: '输入脚本，一键生成火柴人动画视频。通过调用剪映小助手实现视频创作，结合Coze智能体，实现“文生视频”流程自动化，探索了AIGC在短视频方向的应用。', themeColor: 'cyber-blue' },
-      { title: '萌宝小帮手', img: 'images/项目展示9.png', stack: '豆包智能体平台', desc: '为身边的新手妈妈朋友打造的实用问答智能体，解决育儿初期的各种问题。是我第一个“从生活需求出发”的AI产品，验证了AI在人际关系和日常生活中的实际价值。', themeColor: 'cyber-green' },
+      { title: '解梦小助手（测试号）', img: 'images/project-display-1.png', stack: 'Cursor + Dify + 微信开发者工具', desc: '通过用户对梦境的自由描述，AI以“专业解梦师+灵性心理师”的语气生成深度梦境解析，包含情绪分析、象征意义、潜意识暗示与建议。作为第一个尝试落地的AI小程序，虽仍为测试号，但是我从0到1的代表作品。', themeColor: 'cyber-purple' },
+      { title: '梦境解析精灵（已上线）', img: 'images/project-display-2.png', stack: 'Coze + 小微智能体', desc: '为解决微信小程序测试号无法上线的问题，我以Coze平台重构了解梦功能，通过小微智能体上线至正式微信端。支持真实用户使用，亲友试玩反馈良好，弥补了第一个项目的遗憾，成为可用版本的“解梦助手”。', themeColor: 'cyber-blue' },
+      { title: '报报小助手（双版本）', img: 'images/project-display-3.png', stack: 'Cursor + Coze + 微信开发者工具、小微智能体', desc: '一款根据关键词自动生成日报/周报的小程序，拥有“测试号版本”和“已上线智能体版本”。支持自动结构化输出、时间自动填写，是我在AI内容生成与产品体验上的又一次实践。', themeColor: 'cyber-green' },
+      { title: 'AI智能报告神器（国内版 + 国际版）', img: 'images/project-display-4.png', stack: 'Vue 3 + Gitee / GitHub + 腾讯云托管 / Vercel', desc: '输入零碎工作记录，AI自动生成标准化日报/周报，支持多模式切换、缓存姓名、一键复制等贴心功能。从一个内容生成器进化为“懂你”的报告助理，国内外均有部署版本，体现了我的系统设计能力和迭代思维。', themeColor: 'cyber-pink' },
+      { title: 'AI爆款文案神器', img: 'images/project-display-5.png', stack: 'Vue 3 + GitHub + Vercel', desc: '输入关键词+选择风格，AI秒出爆款文案（朋友圈、小红书、搞笑病娇等）。采用深度Prompt调教，确保每种风格精准可控。UI/UX设计历经多轮打磨，现已形成兼具趣味性与实用性的“灵感乐园”。', themeColor: 'cyber-purple' },
+      { title: '本地AI知识助理', img: 'images/project-display-6.png', stack: 'Transformers.js + Whisper + PDF.js + Tesseract.js + Vercel', desc: '可在浏览器中本地解析音频、PDF、图片等私有文件，保障隐私前提下完成摘要、提取与问答。无需上传服务器，适合对隐私敏感的用户或企业内使用，是我对AI“在端运行”理解的实用尝试。', themeColor: 'cyber-blue' },
+      { title: '涂鸦跳跃·赛博版', img: 'images/project-display-7.png', stack: 'Cursor', desc: '用Cursor制作的一款网页小游戏，作为AI开发间隙的“创意放松项目”，让我尝试了游戏逻辑、Canvas绘图与简单碰撞判断，是对前端能力的补充练习。', themeColor: 'cyber-purple' },
+      { title: '火柴人视频生成器', img: 'images/project-display-8.png', stack: 'Coze 工作流 + 剪映小助手', desc: '输入脚本，一键生成火柴人动画视频。通过调用剪映小助手实现视频创作，结合Coze智能体，实现“文生视频”流程自动化，探索了AIGC在短视频方向的应用。', themeColor: 'cyber-blue' },
+      { title: '萌宝小帮手', img: 'images/project-display-9.png', stack: '豆包智能体平台', desc: '为身边的新手妈妈朋友打造的实用问答智能体，解决育儿初期的各种问题。是我第一个“从生活需求出发”的AI产品，验证了AI在人际关系和日常生活中的实际价值。', themeColor: 'cyber-green' },
     ];
 
     // 弹窗相关逻辑
