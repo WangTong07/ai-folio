@@ -84,3 +84,7 @@ body {
 section, main, header, footer {
   background: transparent !important;
 } 
+/* 解决背景特效遮挡点击的问题 */
+#tsparticles {
+  pointer-events: none;
+}

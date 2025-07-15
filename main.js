@@ -95,54 +95,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         animate();
     }
-    // 粒子背景动画初始化
-tsParticles.load("tsparticles", {
-  fullScreen: {
-    enable: true,
-    zIndex: -1
-  },
-  particles: {
-    number: {
-      value: 100, // 星星数量
-      density: {
+// 粒子背景动画初始化 (已添加安全网)
+try {
+  // 我们尝试运行这段代码
+  tsParticles.load("tsparticles", {
+    fullScreen: {
+      enable: true,
+      zIndex: -1
+    },
+    particles: {
+      number: { value: 100 },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: {
+        value: 0.8,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: { value: 2, random: true },
+      line_linked: { enable: false },
+      move: {
         enable: true,
-        value_area: 800
+        speed: 0.5,
+        direction: "none",
+        random: true,
+        straight: false,
+        out_mode: "out"
       }
     },
-    color: {
-      value: "#ffffff" // 星星颜色，这里是白色
-    },
-    shape: {
-      type: "circle"
-    },
-    opacity: {
-      value: 0.8,
-      random: true, // 随机透明度
-      anim: {
-        enable: true, // 开启动画
-        speed: 1, // 动画速度
-        opacity_min: 0.1, // 最小透明度，产生闪烁感
-        sync: false
-      }
-    },
-    size: {
-      value: 2, // 星星大小
-      random: true
-    },
-    line_linked: {
-      enable: false // 关闭星星之间的连线
-    },
-    move: {
-      enable: true, // 关键：让星星动起来
-      speed: 0.5, // 移动速度
-      direction: "none",
-      random: true,
-      straight: false,
-      out_mode: "out"
-    }
-  },
-  retina_detect: true
-});
+    retina_detect: true
+  });
+} catch (e) {
+  // 如果上面的代码失败了（比如现在），就执行这里，但不会让整个网页崩溃
+  console.log("背景特效加载失败，但不影响其他功能。错误信息:", e);
+}
 
     // 移动端菜单按钮
     const menuBtn = document.querySelector('header button.md\\:hidden');
